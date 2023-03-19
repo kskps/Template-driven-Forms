@@ -125,6 +125,14 @@
         </button>
       </div>
     </div>
+    <div class="row col-sm-12" *ngIf="errorMsg" style="margin-left:0px ; display: contents;">
+      <p class="col-sm-12 mb-0 text-danger text-center">{{ errorMsg[1] }}</p>
+      <p class="col-sm-12 mb-0 text-danger text-center">{{ errorMsg[2] }}</p>
+      <p class="col-sm-12 mb-0 text-danger text-center">{{ errorMsg[3] }}</p>
+      <p class="col-sm-12 mb-0 text-danger text-center">{{ errorMsg[4] }}</p>
+      <p class="col-sm-12 mb-0 text-danger text-center">{{ errorMsg[5] }}</p>
+      <p class="col-sm-12 mb-0 text-danger text-center">{{ errorMsg[6] }}</p>
+  </div>
   </form>
 </div>
 
