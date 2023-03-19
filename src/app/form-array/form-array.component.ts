@@ -32,7 +32,7 @@ export class FormArrayComponent implements OnInit {
   }
   newSkill(): FormGroup {
     return this.fb.group({
-      skill: '',
+      skill: ['', Validators.required]
     })
  }
   delete(index: number) {
@@ -75,6 +75,13 @@ export class FormArrayComponent implements OnInit {
         this.profileForm.value.address === undefined
       ) {
         this.errorMsg.push('Please Enter Your Address');
+      }
+      if (
+        this.profileForm.get('skills')?.get('skill')?.value.skill === '' ||
+        this.profileForm.get('skills')?.get('skill')?.value.skill === null ||
+        this.profileForm.get('skills')?.get('skill')?.value.skill === undefined
+      ) {
+        this.errorMsg.push('Please Enter Your Skills');
       }
       if (this.errorMsg !== null) {
         const modalRef = this.ngbModal.open(ModalComponent, {

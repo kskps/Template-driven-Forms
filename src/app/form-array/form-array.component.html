@@ -46,6 +46,7 @@
             class="form-control form-control-sm"
             type="text"
             formControlName="skill"
+            [ngClass]="{required: this.profileForm.get('skills')?.get('skill')?.errors}"
           />
         </div>
         <button
