@@ -18,13 +18,12 @@
         <div class="form-group col-md-6">
           <label for="inputPassword">Password</label>
           <input
-            type="password"
-            class="form-control"
-            name="password"
-            placeholder="Please Enter Password"
-            [(ngModel)]="user.password"
-            required
-            minlength="4"
+          type="password"
+          class="form-control"
+          name="password"
+          placeholder="Please Enter Password"
+          [(ngModel)]="user.password"
+          minlength="4"
           />
         </div>
         <div
@@ -37,6 +36,21 @@
           </div>
         </div>
       </div>
+      <div
+        *ngIf="email.invalid && (email.dirty || email.touched)"
+        class="alert"
+      >
+        <div *ngIf="email.errors?.['required']">Email is required.</div>
+        <div *ngIf="email.errors?.['pattern']">
+          Enter a Valid Email Address
+        </div>
+      </div>
+      <!-- <div
+          *ngIf="password.invalid && (password.dirty || password.touched)"
+          class="alert"
+        > 
+          <div *ngIf="password.errors?.['minlength']">Password is required.</div>
+        </div> -->
       <div class="form-group">
         <label for="inputAddress">Address</label>
         <input
@@ -45,8 +59,15 @@
           name="address1"
           placeholder="Enter Address..."
           [(ngModel)]="user.address1"
+          required
         />
       </div>
+      <!-- <div
+          *ngIf="address1.invalid && (address1.dirty || address1.touched)"
+          class="alert"
+        >
+          <div *ngIf="address1.errors?.['required']">Address is required.</div>
+        </div> -->
       <div class="form-group">
         <label for="inputAddress2">Address 2</label>
         <input
@@ -65,8 +86,15 @@
             class="form-control"
             name="city"
             [(ngModel)]="user.city"
+            required
           />
         </div>
+        <!-- <div
+          *ngIf="city.invalid && (city.dirty || city.touched)"
+          class="alert"
+        >
+          <div *ngIf="city.errors?.['required']">City is required.</div>
+        </div> -->
         <div class="form-group col-md-4">
           <label for="country">Country</label>
           <select
@@ -74,6 +102,7 @@
             class="form-control"
             name="country"
             [(ngModel)]="user.country"
+            required
           >
             <option value="">-- Select --</option>
             <option value="India">India</option>
@@ -81,6 +110,12 @@
             <option value="England">England</option>
           </select>
         </div>
+        <!-- <div
+          *ngIf="country.invalid && (country.dirty || country.touched)"
+          class="alert"
+        >
+          <div *ngIf="country.errors?.['required']">Country is required.</div>
+        </div> -->
       </div>
       <button type="submit" [disabled]="myForm.invalid" class="btn btn-primary">Submit</button>
     </form>
