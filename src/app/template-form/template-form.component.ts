@@ -21,7 +21,7 @@ export class TemplateFormComponent implements OnInit {
   }
   onSubmit(myForm:any) {
     this.userData.push(myForm.value)
-   console.log(this.user);
+   console.log(myForm.value);
   }
 }
 
