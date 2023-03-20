@@ -1,60 +1,130 @@
 <div class="col-md-12 row mt-3">
-    <form [formGroup]="userForm">
-        <div class="form-group col-md-12 row">
-            <div class="col-md-12 row ml-2">
-                <label class="col-form-label col-md-2" for="userName">User Name</label>
-                <div class="col-md-10">
-                    <input [title]="" [ngClass]="{ required: userForm.get('userName')?.errors }" type="text" formControlName="userName" class="form-control form-control-sm"
-                        id="userName" />
-                </div>
-            </div>
-            <div class="col-md-12 row ml-2">
-                <label class="col-form-label col-md-2" for="email">Email</label>
-                <div class="col-md-4">
-                    <input [title]="" type="text" [ngClass]="{ required: userForm.get('email')?.errors }" formControlName="email" class="form-control form-control-sm"
-                        id="email" />
-                </div>
-                <label class="col-form-label col-md-2" for="password">Password</label>
-                <div class="col-md-4">
-                    <input [title]="" type="password" [ngClass]="{ required: userForm.get('password')?.errors }" formControlName="password" class="form-control form-control-sm"
-                        id="password" />
-                </div>
-            </div>
-            <div class="col-md-12 row ml-2">
-                <label class="col-form-label col-md-2" for="address1">Address</label>
-                <div class="col-md-10">
-                    <input [title]="" type="text" [ngClass]="{ required: userForm.get('address1')?.errors }" formControlName="address1" class="form-control form-control-sm"
-                        id="address1" />
-                </div>
-            </div>
-            <div class="col-md-12 row ml-2">
-                <label class="col-form-label col-md-2" for="address2">Address 2</label>
-                <div class="col-md-10">
-                    <input [title]="" type="text" formControlName="address2" class="form-control form-control-sm"
-                        id="address2" />
-                </div>
-            </div>
-            <div class="col-md-12 row ml-2">
-                <label class="col-form-label col-md-2" for="city">City</label>
-                <div class="col-md-4">
-                    <input [title]="" type="text" [ngClass]="{ required: userForm.get('city')?.errors }" formControlName="city" class="form-control form-control-sm"
-                        id="city" />
-                </div>
-                <label class="col-form-label col-md-2" for="country">Country</label>
-                <div class="col-md-4">
-                    <select class="form-control form-control-sm" [ngClass]="{ required: userForm.get('country')?.errors }" formControlName="country" name="country">
-                        <!-- <option [value]="item" *ngFor="let item of countryList">{{item}}
-                                </option> -->
-                        <option value="">-- Select --</option>
+  <form [formGroup]="userForm">
+    <div class="form-group col-md-6 row">
+      <div class="col-md-12 row ml-2">
+        <label class="col-form-label col-md-2" for="userName">User Name</label>
+        <div class="col-md-10">
+          <input
+            [title]=""
+            [ngClass]="{ required: userForm.get('userName')?.errors }"
+            type="text"
+            formControlName="userName"
+            class="form-control form-control-sm"
+            id="userName"
+          />
+        </div>
+      </div>
+      <div class="col-md-12 row ml-2">
+        <label class="col-form-label col-md-2" for="email">Email</label>
+        <div class="col-md-4">
+          <input
+            [title]=""
+            type="text"
+            [ngClass]="{ required: userForm.get('email')?.errors }"
+            formControlName="email"
+            class="form-control form-control-sm"
+            id="email"
+          />
+        </div>
+        <label class="col-form-label col-md-2" for="password">Password</label>
+        <div class="col-md-4">
+          <input
+            [title]=""
+            type="password"
+            [ngClass]="{ required: userForm.get('password')?.errors }"
+            formControlName="password"
+            class="form-control form-control-sm"
+            id="password"
+          />
+        </div>
+      </div>
+        <div formGroupName="mobileNo" class="col-md-12 row ml-2">
+          <label class="col-form-label col-md-2" for="mobile">Mobile</label>
+          <div class="col-md-4">
+            <input
+              [title]=""
+              type="number"
+              [ngClass]="{ required: mobileNo.get('mobile')?.errors }"
+              formControlName="mobile"
+              class="form-control form-control-sm"
+              id="mobile"
+              onKeyPress="if(this.value.length==10) return false;"
+            />
+          </div>
+          <label class="col-form-label col-md-2" for="home">Home</label>
+          <div class="col-md-4">
+            <input
+              [title]=""
+              type="number"
+              formControlName="home"
+              class="form-control form-control-sm"
+              id="home"
+              onKeyPress="if(this.value.length==10) return false;"
+            />
+          </div>
+      </div>
+      <div class="col-md-12 row ml-2">
+        <label class="col-form-label col-md-2" for="address1">Address</label>
+        <div class="col-md-10">
+          <input
+            [title]=""
+            type="text"
+            [ngClass]="{ required: userForm.get('address1')?.errors }"
+            formControlName="address1"
+            class="form-control form-control-sm"
+            id="address1"
+          />
+        </div>
+      </div>
+      <div class="col-md-12 row ml-2">
+        <label class="col-form-label col-md-2" for="address2">Address 2</label>
+        <div class="col-md-10">
+          <input
+            [title]=""
+            type="text"
+            formControlName="address2"
+            class="form-control form-control-sm"
+            id="address2"
+          />
+        </div>
+      </div>
+      <div class="col-md-12 row ml-2">
+        <label class="col-form-label col-md-2" for="city">City</label>
+        <div class="col-md-4">
+          <input
+            [title]=""
+            type="text"
+            [ngClass]="{ required: userForm.get('city')?.errors }"
+            formControlName="city"
+            class="form-control form-control-sm"
+            id="city"
+          />
+        </div>
+        <label class="col-form-label col-md-2" for="country">Country</label>
+        <div class="col-md-4">
+          <select
+            class="form-control form-control-sm"
+            [ngClass]="{ required: userForm.get('country')?.errors }"
+            formControlName="country"
+            name="country"
+          >
+            <option value="">-- Select --</option>
+            <option [value]="item" *ngFor="let item of countryList">
+              {{ item }}
+            </option>
+            <!-- <option value="">-- Select --</option>
                         <option value="India">India</option>
                         <option value="USA">USA</option>
                         <option value="England">England</option>
-                        <option value="England">AUS</option>
-                    </select>
-                </div>
-                <div class="col-md-4"></div>
-                <button class="btn btn-primary col-md-2" (click)="submit()">Submit</button>
-            </div>
+                        <option value="England">AUS</option> -->
+          </select>
         </div>
-    </form>
+        <div class="col-md-4"></div>
+        <button class="btn btn-primary col-md-2" (click)="submit()">
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
 </div>
+

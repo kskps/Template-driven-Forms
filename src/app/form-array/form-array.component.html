@@ -1,0 +1,61 @@
+<div class="col-md-12 row mt-3">
+  <form [formGroup]="profileForm">
+    <div class="form-group col-md-8 row">
+      <div class="col-md-12 row ml-2">
+        <label class="col-form-label col-md-2" for="name">Name</label>
+        <div class="col-md-10">
+          <input
+            [title]=""
+            [ngClass]="{ required: profileForm.get('name')?.errors }"
+            type="text"
+            formControlName="name"
+            class="form-control form-control-sm"
+            id="name"
+          />
+        </div>
+      </div>
+      <div class="col-md-12 row ml-2">
+        <label class="col-form-label col-md-2" for="address">Address</label>
+        <div class="col-md-10">
+          <input
+            [title]=""
+            type="text"
+            [ngClass]="{ required: profileForm.get('address')?.errors }"
+            formControlName="address"
+            class="form-control form-control-sm"
+            id="address"
+          />
+        </div>
+        <div formArrayName="skills">
+          <div class="col-md-6">
+            <button type="button" class="btn btn-sm" (click)="addSkills()"> Add Skill </button>
+          </div>
+          <!-- <button type="button" (click)="addSkills()"> Add another Skill</button> -->
+
+          <div
+            class="col-md-12 row ml-2 mt-2"
+            *ngFor="let alias of skills.controls; let i = index"
+          >
+            <label class="col-form-label col-md-2"
+              >Skills</label
+            >
+            <div class="col-md-10">
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                type="text"
+                [formControlName]="i"
+              />
+            </div>
+            <button
+            style="margin-left: 10px;"
+            (click)="delete(i)"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
