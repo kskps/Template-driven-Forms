@@ -30,4 +30,7 @@ export class FormArrayComponent implements OnInit {
   delete(index: number) {
     this.skills.removeAt(index);
   }
+  submit(){
+    console.log(this.profileForm);
+  }
 }

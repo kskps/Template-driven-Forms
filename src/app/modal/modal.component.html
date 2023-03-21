@@ -1,0 +1,41 @@
+<div class="modal-header">
+  <div class="title">
+    Wait
+  </div>
+  <button class="btn rtn-icon" type="button" (click)="close()">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+</div>
+<div class="modal-body pt-0 pb-1">
+  <table class="table border">
+      <thead>
+          <!-- <tr *ngFor="let item of errorMsg; let i=index" class="text-danger">
+              <th>{{errorMsg[i]}}</th>
+          </tr> -->
+      </thead>
+      <tbody>
+          <tr *ngFor="let item of errorMsg; let i=index">
+              <td class="btn-link">
+                  <a class="text-danger">{{errorMsg[i]}}</a>
+              </td>
+              <td></td>
+              <td></td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+<!-- <div class="modal-header">
+  <h4 class="modal-title">Hi there!</h4>
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p>Hello</p>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" >Close</button>
+</div> -->
+

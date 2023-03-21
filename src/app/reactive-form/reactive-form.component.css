@@ -10,3 +10,7 @@ input::-webkit-inner-spin-button {
   appearance: none;
   margin: 0;
 }
+.text-danger{
+  font-weight:500 ;
+  font-size: 20px;
+}

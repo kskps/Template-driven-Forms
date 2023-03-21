@@ -14,6 +14,17 @@
             [(ngModel)]="user.email"
             #email="ngModel"
           />
+          <span
+          class="text-danger"
+          *ngIf="
+            (email.touched || myForm.submitted) && email.errors?.['required']
+          "
+        >
+          Email is required
+        </span>
+        <span class="text-danger" *ngIf="email.touched && email.errors?.['pattern']">
+          Enter a valid email address
+        </span>
         </div>
         <div class="form-group col-md-6">
           <label for="inputPassword">Password</label>
@@ -27,6 +38,17 @@
             minlength="4"
             #password="ngModel"
           />
+          <span
+          class="text-danger"
+          *ngIf="
+            (password.touched || myForm.submitted) && password.errors?.['required']
+          "
+        >
+          Password is required
+        </span>
+        <span class="text-danger" *ngIf="password.touched && password.errors?.['minlength']">
+          Enter a valid Password
+        </span>
         </div>
         <!-- <div
           *ngIf="email.invalid && (email.dirty || email.touched)"
@@ -56,6 +78,14 @@
           required
           #address1="ngModel"
         />
+        <span
+        class="text-danger"
+        *ngIf="
+          (address1.touched || myForm.submitted) && address1.errors?.['required']
+        "
+      >
+        Address is required
+      </span>
       </div>
       <!-- <div
           *ngIf="address1.invalid && (address1.dirty || address1.touched) && myForm.submitted"
@@ -84,6 +114,14 @@
             required
             #city="ngModel"
           />
+          <span
+          class="text-danger"
+          *ngIf="
+            (city.touched || myForm.submitted) && city.errors?.['required']
+          "
+        >
+          City is required
+        </span>
         </div>
         <div class="form-group col-md-4">
           <label for="country">Country</label>
@@ -100,6 +138,14 @@
             <option value="USA">USA</option>
             <option value="England">England</option>
           </select>
+          <span
+          class="text-danger"
+          *ngIf="
+            (country.touched || myForm.submitted) && country.errors?.['required']
+          "
+        >
+          Country is required
+        </span>
         </div>
         <!-- <div
         *ngIf="city.invalid && (city.dirty || city.touched)"
@@ -116,16 +162,16 @@
       </div>
       <!-- <button type="submit" [disabled]="myForm.invalid" class="btn btn-primary">Submit</button> -->
       <button type="submit" class="btn btn-primary">Submit</button>
-      <div
+      <!-- <span
         *ngIf="(email.invalid && myForm.submitted) && email.errors?.['required'] "
         class="alert"
       >
-        <div *ngIf="email.errors?.['required']">Email is required.</div>
-        <div *ngIf=" myForm.submitted && email.errors?.['pattern']">
+        <span *ngIf="email.errors?.['required']">Email is required.</span>
+        <span *ngIf=" myForm.submitted && email.errors?.['pattern']">
           Enter a Valid Email Address
-        </div>
-      </div>
-      <div
+        </span>
+      </span> -->
+      <!-- <div
         *ngIf="(password.invalid && myForm.submitted) && password.errors?.['required']"
         class="alert"
       >
@@ -133,8 +179,8 @@
         <div *ngIf="password.errors?.['minlength']">
           Min 4 Characters Required.
         </div>
-      </div>
-      <div
+      </div> -->
+      <!-- <div
         *ngIf="(address1.invalid && myForm.submitted) && address1.errors?.['required']"
         class="alert"
       >
@@ -151,7 +197,7 @@
         class="alert"
       >
         <div *ngIf="country.errors?.['required']">Country is required.</div>
-      </div>
+      </div> -->
     </form>
   </div>
   <div class="col-md-6">
