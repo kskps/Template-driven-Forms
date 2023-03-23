@@ -1,0 +1,9 @@
+
+<div class="col-md-12 d-flex">
+  <div class="col-md-6">
+    <app-reactive-form [userForm]="userForm" (onSubmit)="onSubmit($event)"></app-reactive-form>
+  </div>
+  <div class="col-md-6">
+    <app-profile [user]="user"></app-profile>
+  </div>
+</div>
