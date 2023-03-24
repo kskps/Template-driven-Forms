@@ -32,11 +32,10 @@
       <div class="col-md-4">
         <button type="button" class="btn btn-sm" (click)="addSkills()"> Add Skill </button>
       </div>
-      <!-- <button type="button" (click)="addSkills()"> Add another Skill</button> -->
-
       <div
         class="col-md-10 row ml-2 mt-2"
-        *ngFor="let alias of skills.controls; let i = index"
+        *ngFor="let skill of skills.controls; let i = index"
+        [formGroupName]="i"
       >
         <label class="col-form-label col-md-2"
           >Skills</label
@@ -46,7 +45,7 @@
             type="text"
             class="form-control form-control-sm"
             type="text"
-            [formControlName]="i"
+            formControlName="skill"
           />
         </div>
         <button
@@ -82,7 +81,7 @@
                     <th scope="row">{{i+1}}</th>
                     <td>{{item.name}}</td>
                     <td>{{item.address}}</td>
-                    <td>{{item.skills}}</td>
+                    <td>{{item.skills[i].skill}}</td>
                   </tr>
                 </tbody>
               </table>

@@ -21,17 +21,20 @@ export class FormArrayComponent implements OnInit {
     this.profileForm = this.fb.group({
       name:['', Validators.required],
       address:['', Validators.required],
-      skills: this.fb.array([
-        this.fb.control('')
-      ])
+      skills: this.fb.array([])
     })
   }
   get skills() {
     return this.profileForm.get('skills') as FormArray;
   }
   addSkills() {
-    this.skills.push(this.fb.control(''));
+    this.skills.push(this.newSkill());
   }
+  newSkill(): FormGroup {
+    return this.fb.group({
+      skill: '',
+    })
+ }
   delete(index: number) {
     this.skills.removeAt(index);
   }
