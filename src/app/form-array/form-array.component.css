@@ -1,4 +1,21 @@
 .btn-sm{
+  background-color:rgb(84, 243, 35) ;
+  color: aliceblue;
+}
+.btn-primary{
+  margin-left: 23rem;
+}
+.remove{
   background-color:rgb(243, 153, 49) ;
   color: aliceblue;
+}
+.col-form-label{
+  text-align: right;
+  font-weight: 500;
+  font-size: 15px;
+  color:rgb(23, 113, 231) ;
+}
+.required {
+  content:" *";
+  border-color: rgba(212, 21, 8, 0.945);
 }

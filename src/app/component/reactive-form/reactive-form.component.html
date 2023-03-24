@@ -1,7 +1,7 @@
-<div class="col-md-12">
-  <div class="col-md-12 row mt-3">
-    <form [formGroup]="userForm">
-      <div class="form-group col-md-6 row">
+<!-- <div class="col-md-12">
+  <div class="col-md-12 row mt-3"> -->
+    <form [formGroup]="userForm" class="mt-2">
+      <!-- <div class="form-group col-md-6 row"> -->
         <div class="col-md-12 row ml-2">
           <label class="col-form-label col-md-2" for="userName"
             >User Name</label
@@ -51,8 +51,9 @@
               formControlName="mobile"
               class="form-control form-control-sm"
               id="mobile"
+              minlength="10"
               onKeyPress="if(this.value.length==10) return false;"
-            />
+              />
           </div>
           <label class="col-form-label col-md-2" for="home">Home</label>
           <div class="col-md-4">
@@ -142,10 +143,10 @@
             {{ errorMsg[i] }}
           </p>
         </div>
-      </div>
+      <!-- </div> -->
     </form>
-  </div>
-</div>
+  <!-- </div>
+</div> -->
 <div class="col-md-12 mt-3">
   <app-profile [user]="user" *ngIf="user.length !== null"></app-profile>
 </div>

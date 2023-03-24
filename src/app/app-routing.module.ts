@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TemplateComponent } from './container/template/template.component';
 import { FormArrayComponent } from './form-array/form-array.component';
-import { ProfileComponent } from './profile/profile.component';
-import { ReactiveFormComponent } from './reactive-form/reactive-form.component';
-import { TemplateFormComponent } from './template-form/template-form.component';
+import { ProfileComponent } from './component/profile/profile.component';
+import { ReactiveComponent } from './container/reactive/reactive.component';
 
 const routes: Routes = [
-  {path:'temp', component : TemplateFormComponent},
-  {path:'react', component : ReactiveFormComponent},
+  {path:'temp', component : TemplateComponent},
+  {path:'react', component : ReactiveComponent},
   {path:'array', component : FormArrayComponent},
   {path:'profile', component : ProfileComponent}
 ];

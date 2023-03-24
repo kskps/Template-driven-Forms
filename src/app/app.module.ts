@@ -4,12 +4,15 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TemplateFormComponent } from './template-form/template-form.component';
-import { ReactiveFormComponent } from './reactive-form/reactive-form.component';
+import { TemplateFormComponent } from './component/template-form/template-form.component';
+import { ReactiveFormComponent } from './component/reactive-form/reactive-form.component';
 import { FormArrayComponent } from './form-array/form-array.component';
-import { ProfileComponent } from './profile/profile.component';
-import { ModalComponent } from './modal/modal.component';
+import { ProfileComponent } from './component/profile/profile.component';
+import { ModalComponent } from './component/modal/modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TemplateComponent } from './container/template/template.component';
+import { TemplateDataComponent } from './component/template-data/template-data.component';
+import { ReactiveComponent } from './container/reactive/reactive.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormComponent,
     FormArrayComponent,
     ProfileComponent,
-    ModalComponent
+    ModalComponent,
+    TemplateComponent,
+    TemplateDataComponent,
+    ReactiveComponent
   ],
   imports: [
     BrowserModule,

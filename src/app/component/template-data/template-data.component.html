@@ -1,0 +1,23 @@
+<div class="col-md-12">
+    <table class="table">
+      <thead class="header">
+        <tr>
+          <th scope="col">User Name</th>
+          <th scope="col">Address</th>
+          <th scope="col">Country</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let item of userData">
+        <td>
+          {{ item.email }}
+        </td>
+        <td>
+          {{ item.address1 }}
+        </td>
+        <td>
+          {{ item.country }}
+        </td>
+      </tbody>
+    </table>
+  </div>
+

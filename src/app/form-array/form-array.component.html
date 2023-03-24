@@ -1,9 +1,9 @@
-<div class="col-md-12 row mt-3">
-  <form [formGroup]="profileForm">
+<!-- <div class="col-md-12 row mt-3"> -->
+  <form [formGroup]="profileForm" class="mt-2">
     <div class="form-group col-md-12 row">
-      <div class="col-md-12 row ml-2">
+      <div class="col-md-10 row ml-2">
         <label class="col-form-label col-md-2" for="name">Name</label>
-        <div class="col-md-10">
+        <div class="col-md-6">
           <input
             [title]=""
             [ngClass]="{ required: profileForm.get('name')?.errors }"
@@ -14,9 +14,9 @@
           />
         </div>
       </div>
-      <div class="col-md-12 row ml-2">
+      <div class="col-md-10 row ml-2">
         <label class="col-form-label col-md-2" for="address">Address</label>
-        <div class="col-md-10">
+        <div class="col-md-6">
           <input
             [title]=""
             type="text"
@@ -35,13 +35,13 @@
       <!-- <button type="button" (click)="addSkills()"> Add another Skill</button> -->
 
       <div
-        class="col-md-12 row ml-2 mt-2"
+        class="col-md-10 row ml-2 mt-2"
         *ngFor="let alias of skills.controls; let i = index"
       >
         <label class="col-form-label col-md-2"
           >Skills</label
         >
-        <div class="col-md-10">
+        <div class="col-md-6">
           <input
             type="text"
             class="form-control form-control-sm"
@@ -50,16 +50,46 @@
           />
         </div>
         <button
+        class="remove btn"
         style="margin-left: 10px;"
         (click)="delete(i)"
         >
           Remove
         </button>
       </div>
-      <div class="col-md-4"></div>
-      <button class="btn btn-primary col-md-2" (click)="submit()">
-        Submit
-      </button>
     </div>
+    <button class="btn btn-primary col-md-1" (click)="submit()">
+      Submit
+    </button>
   </form>
-</div>
+<!-- </div> -->
+
+
+<section class="" *ngIf="profileData.length !==0" style="background-color: #f4f5f7;">
+      <div class="col col-lg-12 mb-4 mb-lg-0">
+        <div class="card mb-3" style="border-radius: .5rem;">
+              <table class="table col-md-12">
+                <thead class="header">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Skills</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of profileData; let i=index">
+                    <th scope="row">{{i+1}}</th>
+                    <td>{{item.name}}</td>
+                    <td>{{item.address}}</td>
+                    <td>{{item.skills}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            <!-- </div>
+          </div> -->
+        </div>
+      </div>
+    <!-- </div>
+  </div> -->
+</section>
