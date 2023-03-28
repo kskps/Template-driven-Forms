@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { takeUntil } from 'rxjs';
 import { ModalComponent } from 'src/app/component/modal/modal.component';
 
 @Component({
@@ -17,10 +18,12 @@ export class ReactiveComponent implements OnInit {
   userForm!: FormGroup;
   errorMsg: any = [];
   public user: any[] = [];
+  enableUpdate:boolean = false;
   constructor(private fb: FormBuilder, private ngbModal: NgbModal) {}
 
   ngOnInit(): void {
     this.userForm = this.fb.group({
+      id:0,
       userName: ['', Validators.required],
       email: [
         '',
@@ -44,9 +47,10 @@ export class ReactiveComponent implements OnInit {
       country: ['', [Validators.required]],
       mobileNo: this.fb.group({
         mobile: ['', [Validators.pattern('([0-9]).{9,}'), Validators.required]],
-        home: [''],
+        home: ['', [Validators.pattern('([0-9]).{9,}'), Validators.required]],
       }),
     });
+    this.valueChanges();
   }
 
   trim() {
@@ -106,8 +110,49 @@ export class ReactiveComponent implements OnInit {
     //               );
   }
 
+  containsSpecialChars(str:any) {
+    const specialChars = `\`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`;
+
+    const result = specialChars.split('').some(specialChar => {
+      if (str.includes(specialChar)) {
+        return true;
+      }
+
+      return false;
+    });
+
+    return result;
+  }
+
+  eventEmitter (users:any) {
+const data = this.user.at(users)
+// console.log(data);
+this.enableUpdate = true ;
+    this.userForm.patchValue({
+      userName:data.userName,
+      email:data.email,
+      password:data.password,
+      address1:data.address1,
+      address2:data.address2,
+      city:data.city,
+      country:data.country,
+    })
+    this.userForm.get('mobileNo')?.patchValue({
+      mobile:data.mobileNo.mobile,
+      home:data.mobileNo.home
+    })
+  }
+
+  onUpdate(userFormData:any) {
+
+  }
+
+eventDelete(event:any) {
+  this.user.slice(event)
+}
+
   onSubmit($event: any) {
-    console.log($event);
+
     this.trim();
     if (this.userForm.invalid) {
       this.errorMsg = [''];
@@ -126,11 +171,51 @@ export class ReactiveComponent implements OnInit {
         this.errorMsg.push('Please Enter Email');
       }
       if (
-        this.userForm.value.password === null ||
-        this.userForm.value.password === undefined ||
-        this.userForm.value.password === ''
+        this.userForm.get('email')?.value &&
+        !this.userForm.get('email')?.valid
       ) {
-        this.errorMsg.push('Please Enter Password with Min 4 Characters');
+        this.errorMsg.push('Please Enter a Valid Email Address');
+      }
+      this.passwordValidation();
+        if (
+        !this.userForm.get('mobileNo')?.get('mobile')?.valid &&
+        !this.userForm.get('mobileNo')?.get('home')?.value
+      ) {
+        if (
+          this.userForm.get('mobileNo')?.get('mobile')?.value === null ||
+          this.userForm.get('mobileNo')?.get('mobile')?.value === undefined ||
+          this.userForm.get('mobileNo')?.get('mobile')?.value === ''
+        ) {
+          this.errorMsg.push('Please Enter Mobile');
+        }
+      }
+      if (this.userForm.get('mobileNo')?.get('mobile')?.value) {
+        if (
+          this.userForm.get('mobileNo')?.get('mobile')?.value &&
+          !this.userForm.get('mobileNo')?.get('mobile')?.valid
+        ) {
+          this.errorMsg.push('Please Enter a Valid Mobile Number');
+        }
+      }
+      if (
+        !this.userForm.get('mobileNo')?.get('home')?.valid &&
+        !this.userForm.get('mobileNo')?.get('mobile')?.value
+      ) {
+        if (
+          this.userForm.get('mobileNo')?.get('home')?.value === null ||
+          this.userForm.get('mobileNo')?.get('home')?.value === undefined ||
+          this.userForm.get('mobileNo')?.get('home')?.value === ''
+        ) {
+          this.errorMsg.push('Please Enter Home Number');
+        }
+      }
+      if (this.userForm.get('mobileNo')?.get('home')?.value) {
+        if (
+          this.userForm.get('mobileNo')?.get('home')?.value &&
+          !this.userForm.get('mobileNo')?.get('home')?.valid
+        ) {
+          this.errorMsg.push('Please Enter a Valid Home Number');
+        }
       }
       if (
         this.userForm.value.address1 === null ||
@@ -153,13 +238,6 @@ export class ReactiveComponent implements OnInit {
       ) {
         this.errorMsg.push('Please Enter Country');
       }
-      if (
-        this.userForm.get('mobileNo')?.get('mobile')?.value === null ||
-        this.userForm.get('mobileNo')?.get('mobile')?.value === undefined ||
-        this.userForm.get('mobileNo')?.get('mobile')?.value === ''
-      ) {
-        this.errorMsg.push('Please Enter Mobile');
-      }
       // console.log(this.errorMsg);
       if (this.errorMsg !== null) {
         const modalRef = this.ngbModal.open(ModalComponent, {
@@ -171,21 +249,22 @@ export class ReactiveComponent implements OnInit {
     } else {
       this.errorMsg = [''];
       this.user.push(this.userForm.value);
-      console.log(this.user);
-      this.userForm.reset();
-      // this.userForm.setValue({
-      //   userName: '',
-      //   email: '',
-      //   password: '',
-      //   address1: '',
-      //   address2: '',
-      //   city: '',
-      //   country: '',
-      //   mobileNo: {
-      //     mobile: '',
-      //     home: '',
-      //   },
-      // });
+      this.userForm.get('id')?.patchValue(this.userForm.value.id+1)
+
+      // this.userForm.reset();
+      this.userForm.patchValue({
+        userName: '',
+        email: '',
+        password: '',
+        address1: '',
+        address2: '',
+        city: '',
+        country: '',
+        mobileNo: {
+          mobile: '',
+          home: '',
+        },
+      });
       // this.router.navigate(['/profile']);
       // setTimeout(() => {
       //   this.userForm.reset();
@@ -207,5 +286,145 @@ export class ReactiveComponent implements OnInit {
     // this.userData.address2 = this.userForm.value.address2;
     // this.userData.city = this.userForm.value.city;
     // this.userData.country = this.userForm.value.country;
+  }
+
+  passwordValidation () {
+    if (
+      this.userForm.value.password === null ||
+      this.userForm.value.password === undefined ||
+      this.userForm.value.password === ''
+    ) {
+      this.errorMsg.push('Please Enter Password');
+    } if (
+      this.userForm.get('password')?.value &&
+      this.userForm.get('password')?.value.toString().length < 9
+    ) {
+      this.errorMsg.push('Password required with min 9 Characters');
+  } else if (!this.containsSpecialChars(this.userForm.value.password)) {
+      this.errorMsg.push('Atleast 1 Special character Required in Password');
+  }
+  }
+
+  valueChanges() {
+    this.userForm
+      .get('mobileNo')
+      ?.get('mobile')
+      ?.valueChanges.subscribe((cell) => {
+        const work = this.userForm.get('mobileNo')?.get('home')?.value;
+        if (cell && cell.toString().length === 10) {
+          this.userForm.get('mobileNo')?.get('mobile')?.setErrors(null);
+          if (work === null || work === 0 || work.toString().length === 0) {
+            this.userForm.get('mobileNo')?.get('home')?.setErrors(null);
+            this.userForm.get('mobileNo')?.get('home')?.setValidators([]);
+          }
+        } else {
+          if (
+            cell &&
+            cell.toString().length > 0 &&
+            cell.toString().length < 10
+          ) {
+            this.userForm
+              .get('mobileNo')
+              ?.get('mobile')
+              ?.setErrors({ mask: true });
+            if (
+              work &&
+              work.toString().length > 0 &&
+              work.toString().length < 10
+            ) {
+              this.userForm
+                .get('mobileNo')
+                ?.get('home')
+                ?.setErrors({ mask: true });
+            } else {
+              this.userForm.get('mobileNo')?.get('home')?.setErrors(null);
+            }
+          } else {
+            this.userForm.get('mobileNo')?.get('mobile')?.setErrors(null);
+          }
+        }
+
+        if (
+          (cell === null || cell === 0 || cell.toString().length === 0) &&
+          (work === null || work === 0 || work.toString().length === 0)
+        ) {
+          this.userForm
+            .get('mobileNo')
+            ?.get('mobile')
+            ?.setValidators([Validators.required]);
+          this.userForm
+            .get('mobileNo')
+            ?.get('home')
+            ?.setValidators([Validators.required]);
+          this.userForm
+            .get('mobileNo')
+            ?.get('mobile')
+            ?.setErrors({ required: true });
+          this.userForm
+            .get('mobileNo')
+            ?.get('home')
+            ?.setErrors({ required: true });
+        }
+      });
+    this.userForm
+      .get('mobileNo')
+      ?.get('home')
+      ?.valueChanges.subscribe((cell) => {
+        const work = this.userForm.get('mobileNo')?.get('mobile')?.value;
+        if (cell && cell.toString().length === 10) {
+          this.userForm.get('mobileNo')?.get('home')?.setErrors(null);
+          if (work === null || work === 0 || work.toString().length === 0) {
+            this.userForm.get('mobileNo')?.get('mobile')?.setErrors(null);
+            this.userForm.get('mobileNo')?.get('mobile')?.setValidators([]);
+          }
+        } else {
+          if (
+            cell &&
+            cell.toString().length > 0 &&
+            cell.toString().length < 10
+          ) {
+            this.userForm
+              .get('mobileNo')
+              ?.get('home')
+              ?.setErrors({ mask: true });
+            if (
+              work &&
+              work.toString().length > 0 &&
+              work.toString().length < 10
+            ) {
+              this.userForm
+                .get('mobileNo')
+                ?.get('mobile')
+                ?.setErrors({ mask: true });
+            } else {
+              this.userForm.get('mobileNo')?.get('mobile')?.setErrors(null);
+            }
+          } else {
+            this.userForm.get('mobileNo')?.get('home')?.setErrors(null);
+          }
+        }
+
+        if (
+          (cell === null || cell === 0 || cell.toString().length === 0) &&
+          (work === null || work === 0 || work.toString().length === 0)
+        ) {
+          this.userForm
+            .get('mobileNo')
+            ?.get('home')
+            ?.setValidators([Validators.required]);
+          this.userForm
+            .get('mobileNo')
+            ?.get('mobile')
+            ?.setValidators([Validators.required]);
+          this.userForm
+            .get('mobileNo')
+            ?.get('home')
+            ?.setErrors({ required: true });
+          this.userForm
+            .get('mobileNo')
+            ?.get('mobile')
+            ?.setErrors({ required: true });
+        }
+      });
   }
 }

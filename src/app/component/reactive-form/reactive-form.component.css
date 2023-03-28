@@ -3,7 +3,9 @@
 }
 .col-form-label{
   text-align: right;
-  color:hsl(209, 80%, 51%)
+  color:hsl(209, 80%, 51%);
+  font-weight: 400;
+  font-size: 14px;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

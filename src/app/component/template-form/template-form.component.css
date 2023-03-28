@@ -5,3 +5,6 @@
 .alert{
   color: red;
 }
+.required{
+  border-left: 3px solid #f05006;
+}

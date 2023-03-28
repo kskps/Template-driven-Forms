@@ -1,9 +1,9 @@
 
 <div class="col-md-12 d-flex">
   <div class="col-md-6">
-    <app-reactive-form [userForm]="userForm" (onSubmit)="onSubmit($event)"></app-reactive-form>
+    <app-reactive-form [userForm]="userForm" (onUpdate)="onUpdate($event)" (onSubmit)="onSubmit($event)" [enableUpdate]="enableUpdate"></app-reactive-form>
   </div>
   <div class="col-md-6">
-    <app-profile [user]="user"></app-profile>
+    <app-profile [user]="user" (eventEmiter)="eventEmitter($event)" (eventDelete)="eventDelete($event)"></app-profile>
   </div>
 </div>

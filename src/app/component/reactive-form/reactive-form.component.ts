@@ -15,7 +15,9 @@ import { ModalComponent } from '../modal/modal.component';
 })
 export class ReactiveFormComponent implements OnInit {
   @Input() userForm: any;
-  @Output() onSubmit :  EventEmitter<any> = new EventEmitter()
+  @Input() enableUpdate:any;
+  @Output() onSubmit = new EventEmitter();
+  @Output() onUpdate = new EventEmitter();
   public user: any[] = [];
   public errorMsg = [''];
   countryList: any = ['India', 'USA', 'AUS'];
@@ -31,6 +33,7 @@ export class ReactiveFormComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+
   }
   get mobileNo() {
     return this.userForm.get('mobileNo') as FormControl;
@@ -38,5 +41,8 @@ export class ReactiveFormComponent implements OnInit {
 
   submit() {
   this.onSubmit.emit(this.userForm)
+  }
+  update () {
+  this.onUpdate.emit(this.userForm)
   }
 }
