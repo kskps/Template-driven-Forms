@@ -17,13 +17,14 @@ import { ModalComponent } from 'src/app/component/modal/modal.component';
 export class ReactiveComponent implements OnInit {
   userForm!: FormGroup;
   errorMsg: any = [];
-  public user: any[] = [];
-  enableUpdate:boolean = false;
+  public user: any = [];
+  public id: any;
+  enableUpdate: boolean = false;
   constructor(private fb: FormBuilder, private ngbModal: NgbModal) {}
 
   ngOnInit(): void {
     this.userForm = this.fb.group({
-      id:0,
+      id: 0,
       userName: ['', Validators.required],
       email: [
         '',
@@ -110,10 +111,10 @@ export class ReactiveComponent implements OnInit {
     //               );
   }
 
-  containsSpecialChars(str:any) {
+  containsSpecialChars(str: any) {
     const specialChars = `\`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`;
 
-    const result = specialChars.split('').some(specialChar => {
+    const result = specialChars.split('').some((specialChar) => {
       if (str.includes(specialChar)) {
         return true;
       }
@@ -124,35 +125,43 @@ export class ReactiveComponent implements OnInit {
     return result;
   }
 
-  eventEmitter (users:any) {
-const data = this.user.at(users)
-// console.log(data);
-this.enableUpdate = true ;
-    this.userForm.patchValue({
-      userName:data.userName,
-      email:data.email,
-      password:data.password,
-      address1:data.address1,
-      address2:data.address2,
-      city:data.city,
-      country:data.country,
-    })
-    this.userForm.get('mobileNo')?.patchValue({
-      mobile:data.mobileNo.mobile,
-      home:data.mobileNo.home
-    })
+  profileEditEvent(event: any) {
+    this.id = event.id;
+    switch (event.action) {
+      case 'EDIT':
+        if (!this.userForm.value) {
+        const data = this.user[this.id];
+        // console.log(data);
+        this.enableUpdate = true;
+        this.userForm.patchValue({
+          userName: data.userName,
+          email: data.email,
+          password: data.password,
+          address1: data.address1,
+          address2: data.address2,
+          city: data.city,
+          country: data.country,
+        });
+        this.userForm.get('mobileNo')?.patchValue({
+          mobile: data.mobileNo.mobile,
+          home: data.mobileNo.home,
+        });
+      }
+        break;
+      case 'DELETE':
+        this.user.splice(this.id, 1);
+    }
   }
 
-  onUpdate(userFormData:any) {
-
+  onUpdate(event: any) {
+    if (this.userForm.dirty && this.userForm.valid) {
+      const id = this.user[this.id].id;
+      this.userForm.get('id')?.patchValue(id)
+      this.user[id] = this.userForm.value;
+    }
   }
-
-eventDelete(event:any) {
-  this.user.slice(event)
-}
 
   onSubmit($event: any) {
-
     this.trim();
     if (this.userForm.invalid) {
       this.errorMsg = [''];
@@ -177,7 +186,7 @@ eventDelete(event:any) {
         this.errorMsg.push('Please Enter a Valid Email Address');
       }
       this.passwordValidation();
-        if (
+      if (
         !this.userForm.get('mobileNo')?.get('mobile')?.valid &&
         !this.userForm.get('mobileNo')?.get('home')?.value
       ) {
@@ -249,7 +258,7 @@ eventDelete(event:any) {
     } else {
       this.errorMsg = [''];
       this.user.push(this.userForm.value);
-      this.userForm.get('id')?.patchValue(this.userForm.value.id+1)
+      this.userForm.get('id')?.patchValue(this.userForm.value.id +1);
 
       // this.userForm.reset();
       this.userForm.patchValue({
@@ -288,21 +297,22 @@ eventDelete(event:any) {
     // this.userData.country = this.userForm.value.country;
   }
 
-  passwordValidation () {
+  passwordValidation() {
     if (
       this.userForm.value.password === null ||
       this.userForm.value.password === undefined ||
       this.userForm.value.password === ''
     ) {
       this.errorMsg.push('Please Enter Password');
-    } if (
+    }
+    if (
       this.userForm.get('password')?.value &&
       this.userForm.get('password')?.value.toString().length < 9
     ) {
       this.errorMsg.push('Password required with min 9 Characters');
-  } else if (!this.containsSpecialChars(this.userForm.value.password)) {
+    } else if (!this.containsSpecialChars(this.userForm.value.password)) {
       this.errorMsg.push('Atleast 1 Special character Required in Password');
-  }
+    }
   }
 
   valueChanges() {

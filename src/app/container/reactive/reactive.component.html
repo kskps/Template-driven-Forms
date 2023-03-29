@@ -4,6 +4,6 @@
     <app-reactive-form [userForm]="userForm" (onUpdate)="onUpdate($event)" (onSubmit)="onSubmit($event)" [enableUpdate]="enableUpdate"></app-reactive-form>
   </div>
   <div class="col-md-6">
-    <app-profile [user]="user" (eventEmiter)="eventEmitter($event)" (eventDelete)="eventDelete($event)"></app-profile>
+    <app-profile [user]="user" (eventEmiter)="profileEditEvent($event)"></app-profile>
   </div>
 </div>

@@ -8,15 +8,22 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class ProfileComponent implements OnInit {
  @Input() user: any
  @Output() eventEmiter = new EventEmitter ()
- @Output() eventDelete = new EventEmitter ()
   constructor() { }
 
   ngOnInit(): void {
   }
-onClick($event:any) {
-  this.eventEmiter.emit($event)
+onClick(item:any) {
+  // this.eventEmiter.emit($event)
+  this.eventEmiter.emit({
+    action: 'EDIT',
+    id:item.id,
+ })
 }
-delete(event:any) {
-  this.eventDelete.emit(event)
+delete(item:any) {
+  // this.eventDelete.emit(event)
+  this.eventEmiter.emit({
+    action: 'DELETE',
+    id:item.id,
+ })
 }
 }
