@@ -129,24 +129,32 @@ export class ReactiveComponent implements OnInit {
     this.id = event.id;
     switch (event.action) {
       case 'EDIT':
-        if (!this.userForm.value) {
-        const data = this.user[this.id];
-        // console.log(data);
-        this.enableUpdate = true;
-        this.userForm.patchValue({
-          userName: data.userName,
-          email: data.email,
-          password: data.password,
-          address1: data.address1,
-          address2: data.address2,
-          city: data.city,
-          country: data.country,
-        });
-        this.userForm.get('mobileNo')?.patchValue({
-          mobile: data.mobileNo.mobile,
-          home: data.mobileNo.home,
-        });
-      }
+        if (
+          !this.userForm.value.userName &&
+          !this.userForm.value.password &&
+          !this.userForm.value.email &&
+          !this.userForm.value.address1 &&
+          !this.userForm.value.address2 &&
+          !this.userForm.value.country &&
+          !this.userForm.value.city
+        ) {
+          const data = this.user[this.id];
+          // console.log(data);
+          this.enableUpdate = true;
+          this.userForm.patchValue({
+            userName: data.userName,
+            email: data.email,
+            password: data.password,
+            address1: data.address1,
+            address2: data.address2,
+            city: data.city,
+            country: data.country,
+          });
+          this.userForm.get('mobileNo')?.patchValue({
+            mobile: data.mobileNo.mobile,
+            home: data.mobileNo.home,
+          });
+        }
         break;
       case 'DELETE':
         this.user.splice(this.id, 1);
@@ -158,7 +166,25 @@ export class ReactiveComponent implements OnInit {
       const id = this.user[this.id].id;
       this.userForm.get('id')?.patchValue(id)
       this.user[id] = this.userForm.value;
+      this.resetForm();
+      this.enableUpdate=false;
     }
+  }
+
+  resetForm(){
+    this.userForm.patchValue({
+      userName: '',
+      email: '',
+      password: '',
+      address1: '',
+      address2: '',
+      city: '',
+      country: '',
+      mobileNo: {
+        mobile: '',
+        home: '',
+      },
+    });
   }
 
   onSubmit($event: any) {
@@ -259,21 +285,9 @@ export class ReactiveComponent implements OnInit {
       this.errorMsg = [''];
       this.user.push(this.userForm.value);
       this.userForm.get('id')?.patchValue(this.userForm.value.id +1);
-
+      this.resetForm();
       // this.userForm.reset();
-      this.userForm.patchValue({
-        userName: '',
-        email: '',
-        password: '',
-        address1: '',
-        address2: '',
-        city: '',
-        country: '',
-        mobileNo: {
-          mobile: '',
-          home: '',
-        },
-      });
+
       // this.router.navigate(['/profile']);
       // setTimeout(() => {
       //   this.userForm.reset();
